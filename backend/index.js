@@ -2,6 +2,7 @@ import express, { response } from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import EmployeeModel from "./model.js";
+import bcrypt from "bcrypt";
 
 const app = express();
 app.use(express.json());
@@ -15,7 +16,8 @@ app.post("/login", async (req, res) => {
   try {
     const user = await EmployeeModel.findOne({ email: email });
     if (user) {
-      if (user.password === password) {
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (isMatch) {
         res.status(200).json("Successfully logged in");
       } else {
         res.status(401).json("Invalid password");
@@ -31,7 +33,14 @@ app.post("/login", async (req, res) => {
 
 app.post("/register", async (req, res) => {
   try {
-    const employee = await EmployeeModel.create(req.body);
+    const { username, email, password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    console.log(hashedPassword);
+    const employee = await EmployeeModel.create({
+      username,
+      email,
+      password: hashedPassword,
+    });
     res.status(201).json(`${employee.username} account has been created`);
     console.log(employee);
   } catch (err) {

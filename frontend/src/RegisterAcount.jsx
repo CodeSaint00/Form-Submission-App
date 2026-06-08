@@ -31,6 +31,7 @@ export default function RegisterAccount() {
       setStatement("**Passwords must be greater than 8");
       setTimeout(() => {
         setStatement("");
+        z;
       }, 4000);
       return;
     }
@@ -41,6 +42,7 @@ export default function RegisterAccount() {
         password,
         confirmPassword,
       });
+      console.log("request succeeded, navigating...");
       navigate("/login");
     } catch (err) {
       console.log(err.message);

@@ -17,11 +17,6 @@ const EmployeeSchema = new mongoose.Schema({
     required: [true, "Password is required"],
     minlength: [8, "Password must be more than 8 characters"],
   },
-  confirmPassword: {
-    type: String,
-    required: [true, "Password is required"],
-    minlength: [8, "Password must be more than 8 characters"],
-  },
 });
 
 const EmployeeModel = mongoose.model("employee", EmployeeSchema);

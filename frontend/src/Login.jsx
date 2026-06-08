@@ -28,7 +28,7 @@ export default function Login() {
     } catch (err) {
       console.log(err.message);
       if (err.response.status === 401) {
-        setStatement("Incorrect Email");
+        setStatement("Incorrect Email or Password");
         setTimeout(() => {
           setStatement("");
         }, 4000);
