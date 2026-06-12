@@ -4,13 +4,24 @@ import { useState } from "react";
 import axios from "axios";
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import LogoLoader from "./loader";
+import useForm from "./custom hook/FormHook";
 
 export default function RegisterAccount() {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [statement, setStatement] = useState("");
+  const {
+    username,
+    setUsername,
+    email,
+    setEmail,
+    password,
+    setPassword,
+    confirmPassword,
+    setConfirmPassword,
+    isLoading,
+    setIsLoading,
+    statement,
+    setStatement,
+  } = useForm();
   const navigate = useNavigate();
 
   const usernameRef = useRef(null);
@@ -50,6 +61,7 @@ export default function RegisterAccount() {
       }, 4000);
       return;
     }
+    setIsLoading(true);
     try {
       const result = await axios.post("http://localhost:3000/register", {
         username,
@@ -67,6 +79,8 @@ export default function RegisterAccount() {
           setStatement("");
         }, 4000);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -125,11 +139,16 @@ export default function RegisterAccount() {
           onKeyDown={handlePressEnterToSubmit}
           ref={confirmPasswordRef}
         />
-        <button type="button" ref={buttonRef} onClick={handleSubmit}>
-          Create
-        </button>
+        {isLoading ? (
+          <LogoLoader />
+        ) : (
+          <button type="button" ref={buttonRef} onClick={handleSubmit}>
+            Create
+          </button>
+        )}
         <p>
-          <Link to="/login">Log in</Link>
+          Already have an account?
+          <Link to="/login"> Log in</Link>
         </p>
       </form>
     </div>

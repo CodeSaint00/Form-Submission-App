@@ -3,9 +3,11 @@ import useForm from "./custom hook/FormHook";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./verify.css";
 import axios from "axios";
+import LogoLoader from "./loader";
 
 export default function VerifyPage() {
-  const { statement, setStatement, code, setCode } = useForm();
+  const { statement, setStatement, code, setCode, isLoading, setIsLoading } =
+    useForm();
   const location = useLocation();
   const email = location.state?.email;
   const navigate = useNavigate();
@@ -31,6 +33,7 @@ export default function VerifyPage() {
       }, 4000);
       return;
     }
+    setIsLoading(true);
     try {
       const result = await axios.post("http://localhost:3000/verify", {
         code,
@@ -55,6 +58,8 @@ export default function VerifyPage() {
           setStatement("");
         }, 4000);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
@@ -80,9 +85,13 @@ export default function VerifyPage() {
           ref={codeRef}
         />
         <span className="statement">{statement}</span>
-        <button type="" ref={buttonRef} onClick={handleVerify}>
-          verify
-        </button>
+        {isLoading ? (
+          <LogoLoader />
+        ) : (
+          <button type="" ref={buttonRef} onClick={handleVerify}>
+            verify
+          </button>
+        )}
         <p className="resend">
           Code expired? <Link to="/register">Resend it</Link>
         </p>

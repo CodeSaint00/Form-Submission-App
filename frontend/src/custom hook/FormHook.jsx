@@ -6,6 +6,7 @@ function useForm() {
   const [password, setPassword] = useState("");
   const [statement, setStatement] = useState("");
   const [code, setCode] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   return {
     email,
@@ -13,6 +14,8 @@ function useForm() {
     password,
     statement,
     code,
+    isLoading,
+    setIsLoading,
     setEmail,
     setUsername,
     setPassword,

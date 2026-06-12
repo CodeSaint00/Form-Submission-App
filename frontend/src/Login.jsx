@@ -4,10 +4,19 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import useForm from "./custom hook/FormHook";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import LogoLoader from "./loader";
 
 export default function Login() {
-  const { email, setEmail, password, setPassword, statement, setStatement } =
-    useForm();
+  const {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    statement,
+    setStatement,
+    isLoading,
+    setIsLoading,
+  } = useForm();
   const navigate = useNavigate();
 
   const handlelogin = async (e) => {
@@ -19,6 +28,7 @@ export default function Login() {
       }, 4000);
       return;
     }
+    setIsLoading(true);
     try {
       const result = await axios.post("http://localhost:3000/login", {
         email,
@@ -33,6 +43,8 @@ export default function Login() {
           setStatement("");
         }, 4000);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -74,9 +86,13 @@ export default function Login() {
           onKeyDown={handleNextInput2}
           ref={inputRef2}
         />
-        <button type="button" ref={buttonRef} onClick={handlelogin}>
-          Submit
-        </button>
+        {isLoading ? (
+          <LogoLoader />
+        ) : (
+          <button type="button" ref={buttonRef} onClick={handlelogin}>
+            Submit
+          </button>
+        )}
         <p>
           Don't have an account?
           <span>
