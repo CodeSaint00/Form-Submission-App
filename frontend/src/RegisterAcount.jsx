@@ -18,6 +18,8 @@ export default function RegisterAccount() {
     usernameRef.current.focus();
   }, []);
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!username || !email || !password || !confirmPassword) {
@@ -31,7 +33,20 @@ export default function RegisterAccount() {
       setStatement("**Passwords must be greater than 8");
       setTimeout(() => {
         setStatement("");
-        z;
+      }, 4000);
+      return;
+    }
+    if (password !== confirmPassword) {
+      setStatement("**Passwords must be desame");
+      setTimeout(() => {
+        setStatement("");
+      }, 4000);
+      return;
+    }
+    if (!emailRegex.test(email)) {
+      setStatement("Invalid Email");
+      setTimeout(() => {
+        setStatement("");
       }, 4000);
       return;
     }
@@ -43,9 +58,15 @@ export default function RegisterAccount() {
         confirmPassword,
       });
       console.log("request succeeded, navigating...");
-      navigate("/login");
+      navigate("/verify", { state: { email: email } });
     } catch (err) {
       console.log(err.message);
+      if (err.response.data.message === `${email} already exists`) {
+        setStatement("Email already exists");
+        setTimeout(() => {
+          setStatement("");
+        }, 4000);
+      }
     }
   };
 
@@ -67,7 +88,6 @@ export default function RegisterAccount() {
   const handlePressEnterToSubmit = (e) => {
     if (e.key === "Enter") {
       buttonRef.current.click();
-      buttonRef.current.focus();
       confirmPasswordRef.current.blur();
     }
   };

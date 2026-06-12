@@ -1,0 +1,30 @@
+div {
+  display: flex;
+  flex-flow: column nowrap;
+  font-family: sans-serif;
+}
+h3 {
+  font-weight: bold;
+  color: white;
+  text-align: left;
+}
+p {
+  width: 260px;
+}
+span {
+  color: red;
+}
+input {
+  width: 80%;
+  padding: 0.7em;
+  font-weight: bold;
+  color: black;
+  font-size: 1em;
+}
+.resend {
+  text-align: center;
+}
+.statement {
+  color: rgb(255, 0, 0);
+  font-size: 10px;
+}

@@ -6,8 +6,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-  const { email, setEmail, password, setPassword } = useForm();
-  const [statement, setStatement] = useState("");
+  const { email, setEmail, password, setPassword, statement, setStatement } =
+    useForm();
   const navigate = useNavigate();
 
   const handlelogin = async (e) => {
@@ -24,7 +24,7 @@ export default function Login() {
         email,
         password,
       });
-      navigate("/");
+      navigate("/home");
     } catch (err) {
       console.log(err.message);
       if (err.response.status === 401) {
