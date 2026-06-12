@@ -6,6 +6,7 @@ import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import LogoLoader from "./loader";
 import useForm from "./custom hook/FormHook";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function RegisterAccount() {
   const {
@@ -21,6 +22,10 @@ export default function RegisterAccount() {
     setIsLoading,
     statement,
     setStatement,
+    showPassword,
+    setShowPassword,
+    showConfirmPassword,
+    setShowConfirmPassword,
   } = useForm();
   const navigate = useNavigate();
 
@@ -126,19 +131,37 @@ export default function RegisterAccount() {
           ref={emailRef}
         />
         <input
-          type="password"
+          type={showConfirmPassword ? "password" : "text"}
           placeholder="Password"
           onChange={(e) => setPassword(e.target.value)}
           onKeyDown={handlePressEnterToConfirmPassword}
           ref={passwordRef}
         />
         <input
-          type="password"
+          type={showPassword ? "password" : "text"}
           placeholder="Confirm Password"
           onChange={(e) => setConfirmPassword(e.target.value)}
           onKeyDown={handlePressEnterToSubmit}
           ref={confirmPasswordRef}
         />
+        <button
+          type="button"
+          className="eye"
+          onClick={() => {
+            setShowPassword(!showPassword);
+          }}
+        >
+          {showPassword ? <EyeOff /> : <Eye />}
+        </button>
+        <button
+          type="button"
+          className="eye1"
+          onClick={() => {
+            setShowConfirmPassword(!showConfirmPassword);
+          }}
+        >
+          {showConfirmPassword ? <EyeOff /> : <Eye />}
+        </button>
         {isLoading ? (
           <LogoLoader />
         ) : (

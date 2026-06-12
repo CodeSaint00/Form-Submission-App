@@ -5,6 +5,7 @@ import useForm from "./custom hook/FormHook";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import LogoLoader from "./loader";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function Login() {
   const {
@@ -16,6 +17,8 @@ export default function Login() {
     setStatement,
     isLoading,
     setIsLoading,
+    showPassword,
+    setShowPassword,
   } = useForm();
   const navigate = useNavigate();
 
@@ -80,16 +83,30 @@ export default function Login() {
           ref={inputRef}
         />
         <input
-          type="password"
+          type={showPassword ? "password" : "text"}
           placeholder="Password*"
           onChange={(e) => setPassword(e.target.value)}
           onKeyDown={handleNextInput2}
           ref={inputRef2}
         />
+        <button
+          type="button"
+          className="eye"
+          onClick={() => {
+            setShowPassword(!showPassword);
+          }}
+        >
+          {showPassword ? <EyeOff /> : <Eye />}
+        </button>
         {isLoading ? (
           <LogoLoader />
         ) : (
-          <button type="button" ref={buttonRef} onClick={handlelogin}>
+          <button
+            type="button"
+            ref={buttonRef}
+            onClick={handlelogin}
+            className="submit"
+          >
             Submit
           </button>
         )}
