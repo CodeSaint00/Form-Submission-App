@@ -5,7 +5,7 @@ import useForm from "./custom hook/FormHook";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import LogoLoader from "./loader";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Sun, Moon } from "lucide-react";
 
 export default function Login() {
   const {
@@ -69,7 +69,7 @@ export default function Login() {
     }
   };
   return (
-    <div>
+    <div className="">
       <form action="">
         <h2>Login Now!!</h2>
         <span className="statement">{statement}</span>

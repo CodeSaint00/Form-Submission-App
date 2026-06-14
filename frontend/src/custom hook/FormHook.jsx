@@ -4,6 +4,7 @@ function useForm() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [statement, setStatement] = useState("");
   const [code, setCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -14,6 +15,7 @@ function useForm() {
     email,
     username,
     password,
+    confirmPassword,
     statement,
     code,
     isLoading,
@@ -25,6 +27,7 @@ function useForm() {
     setEmail,
     setUsername,
     setPassword,
+    setConfirmPassword,
     setStatement,
     setCode,
   };
