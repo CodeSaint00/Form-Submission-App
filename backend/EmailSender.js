@@ -16,10 +16,10 @@ const emailSender = async (email, code) => {
       from: process.env.EMAIL_USER,
       to: email,
       subject: `${code} is your Email Verification code`,
-      text: `Your Verification code is ${code}, and it expires in 5mins`,
+      text: `Your Verification code is ${code}, and it expires in 10mins`,
     });
   } catch (err) {
-    console.log(err.message)
+    console.log(err.message);
   }
 };
 

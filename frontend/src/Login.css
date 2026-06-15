@@ -20,14 +20,15 @@ form {
   align-items: center;
   background-image: linear-gradient(rgb(77, 77, 77), rgb(42, 42, 42));
   border-radius: 1em;
-  gap: 1em;
+  gap: 0.3em;
   box-shadow: 1px 1px 10px #00000049;
   position: relative;
 }
 input {
   border-radius: 0.5em;
-  padding: 0.5em;
+  padding: 0.25em;
   border: #333;
+  font-size: 0.8em;
 }
 h2 {
   color: rgb(230, 230, 230);
@@ -49,7 +50,7 @@ button {
   position: absolute;
   color: #333;
   right: 1em;
-  bottom: 10.5em;
+  bottom: 9em;
   background-color: transparent;
   border: none;
 }
@@ -57,7 +58,12 @@ button {
   position: absolute;
   color: #333;
   right: 1em;
-  bottom: 14.5em;
+  bottom: 12.5em;
   background-color: transparent;
   border: none;
+}
+.googleContainer {
+  width: 180px;
+  background-color: transparent;
+  height: 40px;
 }

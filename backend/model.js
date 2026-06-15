@@ -14,13 +14,14 @@ const EmployeeSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, "Password is required"],
+    required: false,
     minlength: [6, "Password must be more than 8 characters"],
   },
   isVerified: {
     type: Boolean,
     default: false,
   },
+  authProvider: String,
   verificationCode: Number,
   codeExpiresAt: Number,
 });

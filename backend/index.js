@@ -7,6 +7,7 @@ import cors from "cors";
 import EmployeeModel from "./model.js";
 import bcrypt from "bcrypt";
 import emailSender from "./EmailSender.js";
+import { OAuth2Client } from "google-auth-library";
 
 const app = express();
 app.use(express.json());
@@ -23,20 +24,24 @@ app.post("/login", async (req, res) => {
   try {
     const user = await EmployeeModel.findOne({ email: email });
     if (user) {
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (isMatch) {
-        const jwtToken = jwt.sign(
-          { email: user.email },
-          process.env.JWT_SECRET,
-          { expiresIn: "10m" },
-        );
-        res.cookie("cookieName", jwtToken, {
-          httpOnly: true,
-          maxAge: 172800000,
-        });
-        res.status(200).json("Successfully logged in");
+      if (user.authProvider === "google") {
+        res.status(401).json({ message: "sign in with google instead" });
       } else {
-        res.status(401).json("Invalid password");
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (isMatch) {
+          const jwtToken = jwt.sign(
+            { email: user.email },
+            process.env.JWT_SECRET,
+            { expiresIn: "10m" },
+          );
+          res.cookie("cookieName", jwtToken, {
+            httpOnly: true,
+            maxAge: 172800000,
+          });
+          res.status(200).json("Successfully logged in");
+        } else {
+          res.status(401).json("Invalid password");
+        }
       }
     } else {
       res.status(401).json("Not Registered");
@@ -64,6 +69,7 @@ app.post("/register", async (req, res) => {
       username,
       email,
       password: hashedPassword,
+      authProvider: "local",
       verificationCode: code,
       codeExpiresAt: Date.now() + 600000,
     });
@@ -94,6 +100,40 @@ app.post("/verify", async (req, res) => {
         return res.status(401).json({ message: `${code} expired` });
       }
     } else res.status(401).json({ message: `user does not exist` });
+  } catch (err) {
+    res.status(401).json({ message: err.message });
+  }
+});
+
+app.post("/googleLogin", async (req, res) => {
+  const { token } = req.body;
+  try {
+    const client = new OAuth2Client();
+    const googleVerify = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+    const payload = googleVerify.getPayload();
+    const user = await EmployeeModel.findOne({ email: payload.email });
+    if (!user) {
+      const user = await EmployeeModel.create({
+        username: payload.name,
+        email: payload.email,
+        authProvider: "google",
+      });
+    }
+    const jwtToken = jwt.sign(
+      { email: payload.email },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "10m",
+      },
+    );
+    res.cookie("cookieName", jwtToken, {
+      httpOnly: true,
+      maxAge: 172800000,
+    });
+    res.status(200).json("Successfully logged in");
   } catch (err) {
     res.status(401).json({ message: err.message });
   }

@@ -6,6 +6,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import LogoLoader from "./loader";
 import { Eye, EyeOff, Sun, Moon } from "lucide-react";
+import { GoogleLogin } from "@react-oauth/google";
 
 export default function Login() {
   const {
@@ -40,8 +41,14 @@ export default function Login() {
       navigate("/home");
     } catch (err) {
       console.log(err.message);
-      if (err.response.status === 401) {
+      if (err.response.data.message === "invalid Email") {
         setStatement("Incorrect Email or Password");
+        setTimeout(() => {
+          setStatement("");
+        }, 4000);
+      }
+      if (err.response.data.message === "sign in with google instead") {
+        setStatement("Sign in with Google instead");
         setTimeout(() => {
           setStatement("");
         }, 4000);
@@ -72,6 +79,34 @@ export default function Login() {
     <div className="">
       <form action="">
         <h2>Login Now!!</h2>
+        <div className="googleContainer">
+          <GoogleLogin
+            onSuccess={async (credentialResponse) => {
+              setIsLoading(true);
+              try {
+                const result = await axios.post(
+                  "http://localhost:3000/googleLogin",
+                  {
+                    token: credentialResponse.credential,
+                  },
+                );
+                navigate("/home");
+              } catch (err) {
+                console.log(err.message);
+              } finally {
+                setIsLoading(false);
+              }
+            }}
+            onError={() => {
+              console.log("Login Failed");
+            }}
+            size="large"
+            text="signin_with"
+            shape="rectangular"
+            theme="outline"
+          />
+        </div>
+        <p>or</p>
         <span className="statement">{statement}</span>
         <input
           type="text"

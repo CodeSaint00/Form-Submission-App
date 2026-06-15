@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import LogoLoader from "./loader";
 import useForm from "./custom hook/FormHook";
 import { Eye, EyeOff } from "lucide-react";
+import { GoogleLogin } from "@react-oauth/google";
 
 export default function RegisterAccount() {
   const {
@@ -115,6 +116,30 @@ export default function RegisterAccount() {
     <div>
       <form action="">
         <h2>Register Now</h2>
+        <div className="googleContainer">
+          <GoogleLogin
+            onSuccess={async (credentialResponse) => {
+              setIsLoading(true);
+              try {
+                const result = await axios.post(
+                  "http://localhost:3000/googleLogin",
+                  {
+                    token: credentialResponse.credential,
+                  },
+                );
+                navigate("/home");
+              } catch (err) {
+                console.log(err.message);
+              } finally {
+                setIsLoading(false);
+              }
+            }}
+            onError={() => {
+              console.log("Login Failed");
+            }}
+          />
+        </div>
+        <p>or</p>
         <span className="statement">{statement}</span>
         <input
           type="text"
