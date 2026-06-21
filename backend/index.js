@@ -139,6 +139,32 @@ app.post("/googleLogin", async (req, res) => {
   }
 });
 
+app.get("/search", async (req, res) => {
+  const { search } = req.query;
+  try {
+    if (!search) {
+      const result = await JobModel.find({});
+      res.status(200).json(result);
+    } else {
+      const result = await JobModel.find({
+        $or: [
+          { jobTitle: new RegExp(search, "i") },
+          { location: new RegExp(search, "i") },
+        ],
+      });
+      if (result.length === 0) {
+        res.status(404).json({ message: `No results for ${search}` });
+      } else {
+        res.status(200).json(result);
+      }
+    }
+  } catch (err) {
+    res
+      .status(401)
+      .json({ message: `unable to provide results for ${search}` });
+  }
+});
+
 app.listen(3000, () => {
   console.log(`server is running`);
 });
