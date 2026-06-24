@@ -1,16 +1,26 @@
 .body {
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  align-items: center;
   color: whitesmoke;
   background-color: #333;
+  min-height: 100vh;
+  overflow-y: auto;
+  padding-top: 2em;
+  min-width: 100vw;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
 }
 .light {
   color: #333;
   background-color: rgb(222, 222, 222);
+  min-height: 100vh;
+  padding-top: 2em;
+  overflow-y: auto;
   display: flex;
-  flex-flow: column nowrap;
+  flex-flow: column;
   justify-content: center;
   align-items: center;
 }
@@ -22,6 +32,7 @@
 h1 {
   text-align: center;
   font-family: sans-serif;
+  font-size: 4em;
 }
 .buttons {
   display: flex;
@@ -64,4 +75,73 @@ button {
 }
 .buttonPress {
   animation: pressButton 0.5s ease-in-out forwards;
+}
+.searchInput {
+  display: flex;
+  position: relative;
+  justify-content: center;
+}
+.searchButton {
+  position: absolute;
+  right: 0%;
+  top: -10%;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: 0.1s ease-in-out;
+}
+.searchInput input {
+  width: 60vw;
+  box-shadow: 1px 1px 20px #ffffffb4;
+  border: none;
+  outline: none;
+  transition: 0.1s ease-in-out;
+}
+.searchInput input:focus {
+  transform: scale(1.05);
+  box-shadow: none;
+}
+.searchInput:focus-within > .searchButton {
+  transform: scale(1.1);
+}
+.searchTextbox {
+  box-shadow: 1px 1px 10px #1d1d1db3;
+}
+section {
+  display: flex;
+  flex-flow: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 1em;
+  width: 90%;
+}
+section main {
+  display: flex;
+  flex-flow: column;
+  text-align: center;
+  align-items: center;
+  width: 30%;
+  height: 15em;
+  padding: 0.5em;
+  border-radius: 0.5em;
+  background-color: #1c1b1b8e;
+  font-family: sans-serif;
+}
+h2 {
+  text-align: left;
+  font-size: 1.7em;
+}
+ul {
+  list-style-type: none;
+  display: flex;
+  flex-flow: wrap;
+  justify-content: left;
+  gap: 1em;
+}
+.jobSpan {
+  color: whitesmoke;
+  font-size: 1.2em;
+}
+a {
+  color: whitesmoke;
 }

@@ -113,7 +113,7 @@ export default function RegisterAccount() {
   };
 
   return (
-    <div>
+    <div className="loginBody">
       <form action="">
         <h2>Register Now</h2>
         <div className="googleContainer">

@@ -63,9 +63,9 @@ export default function VerifyPage() {
     }
   };
   return (
-    <div>
+    <div className="verifyBody">
       <form action="">
-        <h1>Email Verification</h1>
+        <h2>Email Verification</h2>
         <p>
           A 6-digit code has been sent to{" "}
           <strong>

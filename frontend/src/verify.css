@@ -1,15 +1,21 @@
-div {
+.verifyBody {
   display: flex;
   flex-flow: column nowrap;
+  place-items: center;
   font-family: sans-serif;
 }
-h3 {
+div{
+  background-color: #333;
+  place-content: center;
+}
+h2 {
   font-weight: bold;
   color: white;
   text-align: left;
 }
 p {
   width: 260px;
+  text-align: center;
 }
 span {
   color: red;

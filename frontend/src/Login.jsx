@@ -76,7 +76,7 @@ export default function Login() {
     }
   };
   return (
-    <div className="">
+    <div className="loginBody">
       <form action="">
         <h2>Login Now!!</h2>
         <div className="googleContainer">
