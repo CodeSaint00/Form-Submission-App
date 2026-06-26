@@ -5,7 +5,7 @@ import useForm from "./custom hook/FormHook";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import LogoLoader from "./loader";
-import { Eye, EyeOff, Sun, Moon } from "lucide-react";
+import { Eye, EyeOff, Sun, Moon, ArrowLeft } from "lucide-react";
 import { GoogleLogin } from "@react-oauth/google";
 
 export default function Login() {
@@ -81,6 +81,14 @@ export default function Login() {
   };
   return (
     <div className="loginBody">
+      <button
+        className="backArrow"
+        onClick={() => {
+          navigate(-1);
+        }}
+      >
+        <ArrowLeft />
+      </button>
       <form action="">
         <h2>Login Now!!</h2>
         <div className="googleContainer">

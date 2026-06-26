@@ -61,10 +61,13 @@ h1 {
   font-family: sans-serif;
   font-size: 4em;
 }
+.statement {
+  color: red;
+}
 .buttons {
   display: flex;
   flex-flow: row nowrap;
-  gap: 2em;
+  gap: 3em;
   background-color: transparent;
 }
 button {

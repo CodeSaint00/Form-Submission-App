@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import LogoLoader from "./loader";
 import useForm from "./custom hook/FormHook";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, ArrowLeft } from "lucide-react";
 import { GoogleLogin } from "@react-oauth/google";
 
 export default function RegisterAccount() {
@@ -118,6 +118,14 @@ export default function RegisterAccount() {
 
   return (
     <div className="loginBody">
+      <button
+        className="backArrow"
+        onClick={() => {
+          navigate(-1);
+        }}
+      >
+        <ArrowLeft />
+      </button>
       <form action="">
         <h2>Register Now</h2>
         <div className="googleContainer">

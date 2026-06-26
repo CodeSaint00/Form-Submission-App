@@ -13,6 +13,16 @@
   text-align: center;
   font-family: sans-serif;
 }
+.backArrow {
+  position: absolute;
+  top: 3em;
+  left: 3em;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  color: whitesmoke;
+  cursor: pointer;
+}
 form {
   padding: 1em;
   display: flex;
