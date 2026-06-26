@@ -35,10 +35,14 @@ export default function VerifyPage() {
     }
     setIsLoading(true);
     try {
-      const result = await axios.post("http://localhost:3000/verify", {
-        code,
-        email,
-      });
+      const result = await axios.post(
+        "http://localhost:3000/verify",
+        {
+          code,
+          email,
+        },
+        { withCredentials: true },
+      );
       navigate("/login");
     } catch (err) {
       console.log(err.message);

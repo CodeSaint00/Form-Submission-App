@@ -11,6 +11,7 @@
   padding: 0;
   box-sizing: border-box;
   text-align: center;
+  font-family: sans-serif;
 }
 form {
   padding: 1em;
@@ -66,4 +67,7 @@ button {
   width: 180px;
   background-color: transparent;
   height: 40px;
+}
+.accountAction {
+  color: whitesmoke;
 }

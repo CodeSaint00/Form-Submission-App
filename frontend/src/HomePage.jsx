@@ -22,6 +22,7 @@ export default function HomePage() {
   const inputRef = useRef(null);
   const buttonRef = useRef(null);
   const [searchedResult, setSearchedResult] = useState(false);
+  const [jobList, setJobList] = useState(false);
 
   const pressEnterToSearch = (e) => {
     if (e.key === "Enter") {
@@ -55,11 +56,16 @@ export default function HomePage() {
     const fetchJobs = async () => {
       setLoading(true);
       try {
-        const Jobs = await axios.get("http://localhost:3000/search");
+        const Jobs = await axios.get("http://localhost:3000/me", {
+          withCredentials: true,
+        });
         setJobs(Jobs.data);
         setSearchedResult(false);
       } catch (err) {
-        console.log(err.message);
+        console.log(err.isAuthenticated);
+        if (err.response.data.isAuthenticated === false) {
+          setJobList(true);
+        }
       } finally {
         setLoading(false);
       }
@@ -82,6 +88,20 @@ export default function HomePage() {
       >
         {theme ? <Moon /> : <Sun />}
       </button>
+      <div className="accountButtons">
+        <Link
+          className={theme ? "buttonDark login" : "buttonLight login"}
+          to="/login"
+        >
+          Login
+        </Link>
+        <Link
+          className={theme ? "buttonDark register" : "buttonLight register"}
+          to="/register"
+        >
+          Register
+        </Link>
+      </div>
       <br />
       <br />
       <h1>Get Employed in Minutes</h1>
@@ -108,7 +128,9 @@ export default function HomePage() {
       <br />
       <br />
       <section className="Jobs">
-        {loading ? (
+        {jobList ? (
+          <h1>Login to View Jobs</h1>
+        ) : loading ? (
           <LogoLoader />
         ) : searchedResult ? (
           <h2>{`Results for ${search} Not Found`}</h2>

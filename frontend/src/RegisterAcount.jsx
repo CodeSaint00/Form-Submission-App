@@ -69,12 +69,16 @@ export default function RegisterAccount() {
     }
     setIsLoading(true);
     try {
-      const result = await axios.post("http://localhost:3000/register", {
-        username,
-        email,
-        password,
-        confirmPassword,
-      });
+      const result = await axios.post(
+        "http://localhost:3000/register",
+        {
+          username,
+          email,
+          password,
+          confirmPassword,
+        },
+        { withCredentials: true },
+      );
       console.log("request succeeded, navigating...");
       navigate("/verify", { state: { email: email } });
     } catch (err) {
@@ -126,6 +130,7 @@ export default function RegisterAccount() {
                   {
                     token: credentialResponse.credential,
                   },
+                  { withCredentials: true },
                 );
                 navigate("/home");
               } catch (err) {
@@ -194,9 +199,9 @@ export default function RegisterAccount() {
             Create
           </button>
         )}
-        <p>
-          Already have an account?
-          <Link to="/login"> Log in</Link>
+        <p className="accountAction">
+          {"Already have an account?  "}
+          <Link to="/login">Log in</Link>
         </p>
       </form>
     </div>

@@ -24,11 +24,38 @@
   justify-content: center;
   align-items: center;
 }
+p {
+  color: #333;
+}
 .buttonLight {
   color: whitesmoke;
   background-color: #333;
+  box-shadow: 1px 1px 10px #3333338d;
 }
-
+.buttonDark {
+  color: #333;
+  background-color: whitesmoke;
+}
+.accountButtons {
+  display: flex;
+  gap: 2em;
+  place-self: end;
+  padding-right: 5em;
+  padding-top: 2em;
+  background-color: transparent;
+}
+.login,
+.register {
+  width: 7em;
+  height: 3em;
+  border-radius: 5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  text-decoration: none;
+  font-family: sans-serif;
+}
 h1 {
   text-align: center;
   font-family: sans-serif;

@@ -34,11 +34,15 @@ export default function Login() {
     }
     setIsLoading(true);
     try {
-      const result = await axios.post("http://localhost:3000/login", {
-        email,
-        password,
-      });
-      navigate("/home");
+      const result = await axios.post(
+        "http://localhost:3000/login",
+        {
+          email,
+          password,
+        },
+        { withCredentials: true },
+      );
+      navigate("/");
     } catch (err) {
       console.log(err.message);
       if (err.response.data.message === "invalid Email") {
@@ -89,8 +93,9 @@ export default function Login() {
                   {
                     token: credentialResponse.credential,
                   },
+                  { withCredentials: true },
                 );
-                navigate("/home");
+                navigate("/");
               } catch (err) {
                 console.log(err.message);
               } finally {
@@ -145,10 +150,10 @@ export default function Login() {
             Submit
           </button>
         )}
-        <p>
-          Don't have an account?
+        <p className="accountAction">
+          {"Don't have an account?  "}
           <span>
-            <Link to="/register"> Create One</Link>
+            <Link to="/register">Create One</Link>
           </span>
         </p>
       </form>
